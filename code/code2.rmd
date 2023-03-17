@@ -2,7 +2,9 @@
 title: "Einstellungstest_Hartwein"
 author: "Alexander Hartwein"
 date: "`r Sys.Date()`"
-output: pdf_document
+output:
+  html_document:
+    df_print: paged
 ---
 
 ```{r setup, include=FALSE}
@@ -13,8 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r library}
 library(tidyverse)
 library(knitr)
-
-
+library(scales)
 # package to combine ggplots
 
 #install.packages("ggpubr")
@@ -26,9 +27,8 @@ df <- read.csv(file="raw_data/test.csv",sep=";",encoding = "latin1")
 ```
 
 ```{r}
-tibble(df)
+#tibble(df)
 ```
-
 
 
 ```{r}
@@ -37,18 +37,23 @@ studycourses_unique <- unique(df$Studiengang)
 
 ```{r}
 for (i in studycourses_unique) {
+  
+  
   df_filtered <- df %>% filter(df$Studiengang== i)
   
   
  df_plot_qualitaet <- ggplot2::ggplot(df_filtered,aes(x=Qualität)) +
   ggtitle(paste0(df_filtered[1,1],"\n\n Qualität"))+
   ylab("Anzahl")+
-  geom_bar()
+  geom_bar()+
+  theme_minimal()
  
  df_plot_verbleib <- ggplot2::ggplot(df_filtered,aes(x=Verbleib)) +
   ggtitle(paste0("Verbleib"))+
   ylab("Anzahl")+
-  geom_bar()
+  geom_bar() +
+  theme_minimal()
+ 
  
  
  arrange <- ggarrange(
@@ -62,4 +67,7 @@ for (i in studycourses_unique) {
 }
 ```
 
+```{r}
+openxlsx::write.xlsx(df,"raw_data/df_raw.xlsx")
+```
 
