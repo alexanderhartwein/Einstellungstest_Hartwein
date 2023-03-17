@@ -15,11 +15,11 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r library}
 library(tidyverse)
 library(knitr)
-library(scales)
-# package to combine ggplots
 
-#install.packages("ggpubr")
-library("ggpubr")
+
+# package to combine ggplots
+#install.packages("ggpubr") 
+library(ggpubr)
 ```
 
 ```{r}
@@ -42,32 +42,26 @@ for (i in studycourses_unique) {
   df_filtered <- df %>% filter(df$Studiengang== i)
   
   
- df_plot_qualitaet <- ggplot2::ggplot(df_filtered,aes(x=Qualität)) +
-  ggtitle(paste0(df_filtered[1,1],"\n\n Qualität"))+
-  ylab("Anzahl")+
-  geom_bar()+
-  theme_minimal()
- 
- df_plot_verbleib <- ggplot2::ggplot(df_filtered,aes(x=Verbleib)) +
-  ggtitle(paste0("Verbleib"))+
-  ylab("Anzahl")+
-  geom_bar() +
-  theme_minimal()
- 
- 
- 
- arrange <- ggarrange(
-   df_plot_qualitaet, 
-   df_plot_verbleib, 
-   ncol = 1,
-   nrow = 2)
- 
- ggsave(paste0("outcome/",df_filtered[1,1],"- Plot.pdf"), arrange)
+  df_plot_qualitaet <- ggplot2::ggplot(df_filtered,aes(x=Qualität)) +
+    ggtitle(paste0(df_filtered[1,1],"\n\n Qualität"))+
+    ylab("Anzahl")+
+    geom_bar()+
+    theme_minimal()
+  
+  df_plot_verbleib <- ggplot2::ggplot(df_filtered,aes(x=Verbleib)) +
+    ggtitle(paste0("Verbleib"))+
+    ylab("Anzahl")+
+    geom_bar() +
+    theme_minimal()
+  
+  arrange <- ggarrange(
+    df_plot_qualitaet, 
+    df_plot_verbleib, 
+    ncol = 1,
+    nrow = 2)
+  
+  ggsave(paste0("outcome/",df_filtered[1,1],"- Plot.pdf"), arrange)
 
 }
-```
-
-```{r}
-openxlsx::write.xlsx(df,"raw_data/df_raw.xlsx")
 ```
 
