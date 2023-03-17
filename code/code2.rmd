@@ -2,9 +2,6 @@
 title: "Einstellungstest_Hartwein_Code1"
 author: "Alexander Hartwein"
 date: "`r Sys.Date()`"
-params:
-  studiengang:
-    label: "Year"
 output: pdf_document
 ---
 
