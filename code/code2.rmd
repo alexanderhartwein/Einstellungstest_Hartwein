@@ -60,7 +60,7 @@ for (i in studycourses_unique) {
     ncol = 1,
     nrow = 2)
   
-  ggsave(paste0("outcome/",df_filtered[1,1],"- Plot.pdf"), arrange)
+  ggsave(paste0("outcome/",df_filtered[1,1]," - Plot.pdf"), arrange)
 
 }
 ```
