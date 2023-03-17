@@ -39,11 +39,11 @@ studycourses_unique <- unique(df$Studiengang)
 for (i in studycourses_unique) {
   
   
-  df_filtered <- df %>% filter(df$Studiengang== i)
+  df_filtered <- df %>% filter(df$Studiengang == i)
   
   
   df_plot_qualitaet <- ggplot2::ggplot(df_filtered,aes(x=Qualität)) +
-    ggtitle(paste0(df_filtered[1,1],"\n\n Qualität"))+
+    ggtitle(paste0("Studiengang: ",df_filtered[1,1],"\n\n Qualität"))+
     ylab("Anzahl")+
     geom_bar()+
     theme_minimal()
