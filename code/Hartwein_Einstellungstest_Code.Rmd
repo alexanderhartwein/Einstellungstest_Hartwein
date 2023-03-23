@@ -1,0 +1,50 @@
+---
+title: "Einstellungstest Hartwein Code"
+author: "Alexander Hartwein"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r}
+library(tidyverse)
+library(ggpubr)
+library(knitr)
+```
+
+```{r}
+df <- read.csv("raw_data/test.csv",sep = ";",encoding = "latin1")
+```
+
+```{r}
+studiengang_unique <- unique(df$Studiengang)
+```
+
+```{r}
+for (i in studiengang_unique) {
+  df_filtered <- df %>% filter(Studiengang == i)
+  
+  df_plot_qualitaet <- ggplot(df_filtered,aes(x=Qualität))+
+    ggtitle(paste0("Studiengang: ",df_filtered[1,1],"\n\n Qualität"))+
+    ylab("Anzahl")+
+    geom_bar()+
+    theme_minimal()
+  
+  df_plot_verbleib <- ggplot(df_filtered,aes(x=Verbleib))+
+    ggtitle(paste0("Verbleib"))+
+    ylab("Anzahl")+
+    geom_bar()+
+    theme_minimal()
+  
+  arrange <- ggarrange(
+    df_plot_qualitaet,
+    df_plot_verbleib,
+    ncol=1,
+    nrow=2
+    )
+    
+  ggsave(paste0("outcome/",df_filtered[1,1]," - Plot.pdf"))
+    
+
+}
+```
+
